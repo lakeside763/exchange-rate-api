@@ -27,15 +27,9 @@ func (h *ExchangeRateHandler) GetExchangeRate(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	fmt.Println("Fetching exchange rate for:", base, "to", target)
-
 	key := fmt.Sprintf("%s_%s", base, target)
-	fmt.Println("Key for exchange rate lookup:", key)
-	// Debug: print all available keys (if using a map)
-	// fmt.Println("Available keys:", h.Storage.ListKeys()) // implement ListKeys() if needed
 	rate, exists := h.Storage.GetExchangeRate(key)
 	if !exists {
-		fmt.Println("Available keys do not contain:", key)
 		http.Error(w, "Exchange rate not found", http.StatusNotFound)
 		return
 	}
