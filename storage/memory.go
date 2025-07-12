@@ -40,6 +40,15 @@ var Users = map[string]model.User{
 	},
 }
 
+var ExchangeRates = map[string]float64{
+	"USD_EUR": 0.9,
+	"EUR_USD": 1.1,
+	"USD_GBP": 0.78,
+	"GBP_USD": 1.28,
+	"EUR_GBP": 0.86,
+	"GBP_EUR": 1.16,
+}
+
 var (
 	RequestCounts = make(map[string]int)
 	RateLimitMu            sync.Mutex

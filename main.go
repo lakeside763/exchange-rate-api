@@ -12,9 +12,9 @@ import (
 func main() {
 	storage.InitRedis()
 
-	handler := handler.NewExchangeRateHandler()
-	service := storage.NewStorageService()
-	middleware := middleware.NewRateLimitMiddleware(service)
+	storage := storage.NewStorageService()
+	handler := handler.NewExchangeRateHandler(storage)
+	middleware := middleware.NewRateLimitMiddleware(storage)
 
 	mux := http.NewServeMux()
 	mux.Handle("/api/v1/rates", middleware.RateLimit(http.HandlerFunc(handler.GetExchangeRate)))

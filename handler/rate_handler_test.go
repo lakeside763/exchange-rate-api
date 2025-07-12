@@ -19,7 +19,8 @@ func TestGetExchageRate_Success(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/v1/rates?base=USD&target=EUR", nil)
 	req.Header.Set("X-API-Key", "test123")
 
-	h := NewExchangeRateHandler()
+	service := storage.NewStorageService()
+	h := NewExchangeRateHandler(service)
 
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(h.GetExchangeRate)
@@ -33,7 +34,8 @@ func TestGetExchangeRate_MissingBase(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/v1/rates?target=EUR", nil)
 	req.Header.Set("X-API-Key", "test123")
 
-	h := NewExchangeRateHandler()
+	service := storage.NewStorageService()
+	h := NewExchangeRateHandler(service)
 
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(h.GetExchangeRate)
@@ -47,7 +49,8 @@ func TestExchangeRate_InvalidCurrencyPair(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/v1/rates?base=ABC&target=XYZ", nil)
 	req.Header.Set("X-API-Key", "test123")
 
-	h := NewExchangeRateHandler()
+	service := storage.NewStorageService()
+	h := NewExchangeRateHandler(service)
 
 	rr := httptest.NewRecorder()
 	handler := http.HandlerFunc(h.GetExchangeRate)

@@ -4,24 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/lakeside763/exchange-rate-api/storage"
 )
 
 type ExchangeRateHandler struct {
-	ExchangeRates map[string]float64
+	Storage storage.Storage
 }
 
-var exchangeRates = map[string]float64{
-	"USD_EUR": 0.9,
-	"EUR_USD": 1.1,
-	"USD_GBP": 0.78,
-	"GBP_USD": 1.28,
-	"EUR_GBP": 0.86,
-	"GBP_EUR": 1.16,
-}
-
-func NewExchangeRateHandler() *ExchangeRateHandler {
+func NewExchangeRateHandler(storage storage.Storage) *ExchangeRateHandler {
 	return &ExchangeRateHandler{
-		ExchangeRates: exchangeRates,
+		Storage: storage,
 	}
 }
 
@@ -34,9 +27,15 @@ func (h *ExchangeRateHandler) GetExchangeRate(w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	fmt.Println("Fetching exchange rate for:", base, "to", target)
+
 	key := fmt.Sprintf("%s_%s", base, target)
-	rate, exists := h.ExchangeRates[key]
+	fmt.Println("Key for exchange rate lookup:", key)
+	// Debug: print all available keys (if using a map)
+	// fmt.Println("Available keys:", h.Storage.ListKeys()) // implement ListKeys() if needed
+	rate, exists := h.Storage.GetExchangeRate(key)
 	if !exists {
+		fmt.Println("Available keys do not contain:", key)
 		http.Error(w, "Exchange rate not found", http.StatusNotFound)
 		return
 	}
