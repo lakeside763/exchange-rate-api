@@ -76,18 +76,18 @@ func checkLimit(key string, limit int, ttl time.Duration) bool {
 	return int(count) <= limit
 }
 
-func checkLimit2(key string, limit int) bool {
-	storage.RateLimitMu.Lock()
-	defer storage.RateLimitMu.Unlock()
+// func checkLimit2(key string, limit int) bool {
+// 	storage.RateLimitMu.Lock()
+// 	defer storage.RateLimitMu.Unlock()
 
-	count := storage.RequestCounts[key]
-	if count > limit {
-		return false
-	}
+// 	count := storage.RequestCounts[key]
+// 	if count > limit {
+// 		return false
+// 	}
 
-	storage.RequestCounts[key] = count + 1
-	return true
-}
+// 	storage.RequestCounts[key] = count + 1
+// 	return true
+// }
 
 
 
