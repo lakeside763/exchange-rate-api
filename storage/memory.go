@@ -1,8 +1,6 @@
 package storage
 
 import (
-	"sync"
-
 	"github.com/lakeside763/exchange-rate-api/model"
 )
 
@@ -49,7 +47,7 @@ var ExchangeRates = map[string]float64{
 	"GBP_EUR": 1.16,
 }
 
-var (
-	RequestCounts = make(map[string]int)
-	RateLimitMu            sync.Mutex
-)
+// var (
+// 	RequestCounts = make(map[string]int)
+// 	RateLimitMu            sync.Mutex
+// )

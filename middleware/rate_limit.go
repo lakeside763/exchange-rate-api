@@ -60,9 +60,6 @@ func getWeek(t time.Time) int {
 	return week
 }
 
-// key
-// limit
-// ttl
 func checkLimit(key string, limit int, ttl time.Duration) bool {
 	count, err := storage.RedisClient.Incr(storage.Ctx(), key).Result()
 	if err != nil {
@@ -88,8 +85,6 @@ func checkLimit(key string, limit int, ttl time.Duration) bool {
 // 	storage.RequestCounts[key] = count + 1
 // 	return true
 // }
-
-
 
 
 // ratelimit:{user_id}:daily:20250707
